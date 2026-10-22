@@ -1,6 +1,7 @@
 from typing import Any, Dict, Optional
 import requests
 from requests.exceptions import HTTPError, RequestException, Timeout
+import json
 
 class APIClient:
     """Универсальная обёртка над библиотекой requests."""
@@ -55,13 +56,20 @@ class APIClient:
             raise RequestException(f"Ошибка сети при запросе к {url}: {req_err}")
 
     def get(
-        self, endpoint: str, params: Optional[Dict[str, Any]] = None, **kwargs
+        self,
+        endpoint: str,
+        params: Optional[Dict[str, Any]] = None,
+        headers: Optional[dict] = None,
+        **kwargs
     ) -> Optional[Dict[str, Any]]:
         """GET-запрос"""
-        return self._send_request("GET", endpoint, params=params, **kwargs)
+        return self._send_request("GET", endpoint, params=params, headers= headers, **kwargs)
 
     def post(
-        self, endpoint: str, json: Optional[Dict[str, Any]] = None, **kwargs
+        self,
+        endpoint: str,
+        json: Optional[Dict[str, Any]] = None,
+        **kwargs
     ) -> Optional[Dict[str, Any]]:
         """POST-запрос"""
         return self._send_request("POST", endpoint, json=json, **kwargs)
