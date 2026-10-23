@@ -1,16 +1,22 @@
-# This is a sample Python script.
+from src.aeroplanes_api import AeroplaneAPI
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# Функция для взаимодействия с пользователем
+def user_interaction():
+    country = input("Введите название страны: ")
+    top_n = int(input("Введите количество самолетов для вывода в топ N: "))
+    country_registry = input("Введите названия стран для фильтрации по стране регистрации: ")
+    altitude_range = input("Введите диапазон высот полета: ") # Пример: 100000 - 150000
+
+    aeroplane_api = AeroplaneAPI()
+
+    aeroplanes_in_country = aeroplane_api.get_data(country)
+
+    for aeroplane in aeroplanes_in_country.get_top_filtered_planes(country_match=country_registry,
+                                                        altitude_str=altitude_range,
+                                                        top_n=top_n
+                                                        ):
+        print(aeroplane)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    user_interaction()

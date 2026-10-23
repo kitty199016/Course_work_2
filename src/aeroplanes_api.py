@@ -1,7 +1,7 @@
 from src.api_client import APIClient
 from src.base_adapters import AeroAPI
 from src.openstreet_api import OpenStreetAPI
-from models.streetmap_models import OpenStreetDataCoordinates
+from models.aeroplane_model import AeroplanesDB
 
 class AeroplaneAPI(AeroAPI):
     """Класс для взаимодействия с open street map"""
@@ -17,7 +17,7 @@ class AeroplaneAPI(AeroAPI):
         }
         self.coordinates = OpenStreetAPI()
 
-    def get_data(self, country: str) -> OpenStreetDataCoordinates:
+    def get_data(self, country: str) -> AeroplanesDB:
         """
         :param country: Принимает страну
         по которым выдаст самолёты пролетающие над этой страной
@@ -28,8 +28,8 @@ class AeroplaneAPI(AeroAPI):
         data = self.__connect.get(endpoint=endpoint,
                                   params=params.model_dump())
 
-        return data
+        return AeroplanesDB.model_validate(data['states'])
 
 if __name__ == '__main__':
     a = AeroplaneAPI()
-    print(a.get_data("Russia"))
+    print(a.get_data("Spain"))
