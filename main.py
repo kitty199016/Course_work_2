@@ -22,13 +22,7 @@ def user_interaction():
     if write_to_file in {"Y", "yes", "y"}:
 
         file_type = input("Введите тип файла[json/csv]:")
-        if file_type == "json":
-            file_repo = AeroplaneRepositoryFactory.create_repository("data/aerplanes.json")
-        elif file_type == "csv":
-            file_repo = AeroplaneRepositoryFactory.create_repository("data/aerplanes.json")
-        else:
-            raise ValueError("Некорректный тип файла")
-
+        file_repo = AeroplaneRepositoryFactory.create_repository(f"data/aerplanes.{file_type}")
         file_repo.save(aeroplanes_in_country)
 
 
