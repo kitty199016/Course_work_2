@@ -1,4 +1,5 @@
 from src.aeroplanes_api import AeroplaneAPI
+from src.manager import AeroplaneRepositoryFactory
 
 # Функция для взаимодействия с пользователем
 def user_interaction():
@@ -16,6 +17,19 @@ def user_interaction():
                                                         top_n=top_n
                                                         ):
         print(aeroplane)
+
+    write_to_file = input("Записать в файл?[Y/n]:")
+    if write_to_file in {"Y", "yes", "y"}:
+
+        file_type = input("Введите тип файла[json/csv]:")
+        if file_type == "json":
+            file_repo = AeroplaneRepositoryFactory.create_repository("data/aerplanes.json")
+        elif file_type == "csv":
+            file_repo = AeroplaneRepositoryFactory.create_repository("data/aerplanes.json")
+        else:
+            raise ValueError("Некорректный тип файла")
+
+        file_repo.save(aeroplanes_in_country)
 
 
 if __name__ == "__main__":
